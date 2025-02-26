@@ -1,0 +1,40 @@
+name: Deploy SQL Scripts
+
+on:
+  push:
+    branches:
+      - main  # Runs only when you push to the main branch
+
+jobs:
+  test-sql:
+    runs-on: ubuntu-latest  # Uses an Ubuntu machine
+
+    steps:
+      - name: Checkout Repository  # Step 1: Get latest SQL scripts from GitHub
+        uses: actions/checkout@v4
+
+      - name: Set Up MySQL  # Step 2: Install MySQL (change to your database type if needed)
+        run: |
+          sudo systemctl start mysql
+          mysql --version  # Check MySQL is installed
+
+      - name: Run SQL Scripts  # Step 3: Run SQL scripts
+        env:
+          DB_HOST: ${{ secrets.DB_HOST }}
+          DB_USER: ${{ secrets.DB_USER }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+        run: |
+          mysql -h $DB_HOST -u $DB_USER -p$DB_PASSWORD < your_script.sql
+
+  deploy-sql:
+    needs: test-sql  # Step 4: Deploy only if SQL scripts run successfully
+    runs-on: ubuntu-latest  
+
+    steps:
+      - name: Deploy SQL Changes  # Step 5: Deploy SQL scripts
+        env:
+          DB_HOST: ${{ secrets.DB_HOST }}
+          DB_USER: ${{ secrets.DB_USER }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+        run: |
+          mysql -h $DB_HOST -u $DB_USER -p$DB_PASSWORD < deploy_script.sql
