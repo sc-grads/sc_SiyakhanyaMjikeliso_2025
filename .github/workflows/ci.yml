@@ -1,0 +1,58 @@
+name: Automate Database Creation
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout code
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      # Step 2: Set up SQL Server (e.g., using Docker)
+      - name: Set up SQL Server
+        uses: docker://mcr.microsoft.com/mssql/server:2022-latest
+        with:
+          args: /bin/bash -c "mkdir /var/opt/mssql/data && /opt/mssql/bin/sqlservr"
+
+      # Step 3: Install SQLCMD (for interacting with SQL Server)
+      - name: Install sqlcmd
+        run: |
+          curl https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
+          curl https://packages.microsoft.com/config/ubuntu/$(lsb_release -rs)/prod.list | sudo tee /etc/apt/sources.list.d/mssql-release.list
+          sudo apt-get update
+          sudo ACCEPT_EULA=Y apt-get install -y msodbcsql17 mssql-tools
+
+      # Step 4: Set up environment variables for SQL Server
+      - name: Set SQL Server environment variables
+        run: |
+          export SA_PASSWORD='YourStrong!Passw0rd'
+          export SQL_SERVER='localhost'
+
+      # Step 5: Start SQL Server container (Docker)
+      - name: Start SQL Server container
+        run: |
+          docker run -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=$SA_PASSWORD' -p 1433:1433 --name sql-server --restart unless-stopped -d mcr.microsoft.com/mssql/server:2019-latest
+
+      # Step 6: Wait for SQL Server to be ready
+      - name: Wait for SQL Server to be ready
+        run: |
+          sleep 30 # Wait for SQL Server to start
+
+      # Step 7: Run the SQL script
+      - name: Execute SQL script
+        run: |
+          docker exec -i sql-server /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P "$SA_PASSWORD" -d master -i ./InsertStudent.sql
+
+      # Step 8: Verify that the data was inserted successfully (optional)
+      - name: Verify Data Insertion
+        run: |
+          docker exec -i sql-server /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P "$SA_PASSWORD" -d AutoTest1 -Q "SELECT * FROM user"
