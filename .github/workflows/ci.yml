@@ -4,17 +4,18 @@ on: [push]
 
 jobs:
   test-sql:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest  # Uses GitHub-hosted runner with pre-installed Docker
+    
     services:
       mssql:
         image: mcr.microsoft.com/mssql/server:2022-latest
         env:
           ACCEPT_EULA: "Y"
-          SA_PASSWORD: "YourStrong!Passw0rd"
+          SA_PASSWORD: "Siyakhanya@2002"
         ports:
           - 1433:1433
         options: >-
-          --health-cmd "sqlcmd -S localhost -U sa -P YourStrong!Passw0rd -Q 'SELECT 1'" 
+          --health-cmd "sqlcmd -S localhost -U Auto_user1 -P Siyakhanya@2002 -Q 'SELECT 1'" 
           --health-interval 10s 
           --health-timeout 5s 
           --health-retries 5
@@ -31,3 +32,4 @@ jobs:
       - name: Run SQL Script
         run: |
           sqlcmd -S localhost -U sa -P YourStrong!Passw0rd -i CreateDatabaseAndTable.sql
+
