@@ -1,0 +1,48 @@
+name: SQL Server Automation Pipeline  # The name of the GitHub Actions workflow
+
+on:  # This section defines when the workflow should run
+  push:
+    branches:
+      - main  # The workflow will run when you push changes to the 'main' branch
+
+jobs:
+  execute-stored-procedure:  # Name of the job that GitHub Actions will run
+    runs-on: ubuntu-latest  # The job will run on the latest Ubuntu environment
+
+    services:
+      mssql:  # Defines the SQL Server service that will run in a container
+        image: mcr.microsoft.com/mssql/server:2019-latest  # Pull the official SQL Server 2019 image
+        env:  # Set environment variables required by SQL Server
+          ACCEPT_EULA: Y  # Accept SQL Server license agreement
+          SA_PASSWORD: YourStrong!Passw0rd  # Set a strong password for the 'sa' (admin) user
+        ports:
+          - 1433:1433  # Expose SQL Server on port 1433 (default port)
+        options: >-  # Health check: Ensure SQL Server is ready before running scripts
+          --health-cmd "/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P YourStrong!Passw0rd -Q 'SELECT 1'" 
+          --health-interval=10s 
+          --health-timeout=5s 
+          --health-retries=3
+
+    steps:
+      - name: Checkout repository  # Step 1: Get the latest code from the GitHub repository
+        uses: actions/checkout@v3
+
+      - name: Wait for MSSQL to be ready  # Step 2: Ensure SQL Server is running before executing commands
+        run: |
+          for i in {30..0}; do
+            /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P YourStrong!Passw0rd -Q "SELECT 1" && break
+            echo 'Waiting for MSSQL to start...'
+            sleep 1
+          done
+
+      - name: Run Stored Procedure Setup Script  # Step 3: Execute the SQL script to create stored procedure
+        run: |
+          /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P YourStrong!Passw0rd -d AutoTest -i setup.sql
+
+      - name: Call Stored Procedure to Insert User  # Step 4: Execute the stored procedure to insert data
+        run: |
+          /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P YourStrong!Passw0rd -d AutoTest -Q "EXEC InsertUser 'Alice Doe', 'alice@example.com';"
+
+      - name: Verify Inserted Data  # Step 5: Check if the user was inserted correctly
+        run: |
+          /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P YourStrong!Passw0rd -d AutoTest -Q "SELECT * FROM user_1;"
