@@ -7,11 +7,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-
-      - name: Send Teams Notification
-        uses: skitionek/notify-msteams@v1
+      # this is the new step
+      - uses: dchourasia/ms-teams-notification@1.0 #  or "./" if in a local set-up
         if: always()
         with:
-          webhook_url: ${{ secrets.TEAMS_WEBHOOK_URL }}
-          message: |
-            ${{ github.event.pull_request.merged == true && 'The pull request was successfully merged.' || 'The request was not merged.' }}
+          github-token: ${{ github.token }}
+          webhook-uri: ${{ secrets.TEAMS_WEBHOOK_URL }}
