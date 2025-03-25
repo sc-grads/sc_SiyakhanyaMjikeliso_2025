@@ -1,0 +1,51 @@
+name: Setup SQL Server Database
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  setup-database:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install SQL Server tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y mssql-tools unixodbc-dev
+
+      - name: Connect to SQL Server and Create Database
+        env:
+          DB_SERVER: " https://l0c95j9ck91n.share.zrok.io "
+          DB_USER: "testuser"
+          DB_PASSWORD: "Siya@2002"
+        run: |
+          sqlcmd -S $DB_SERVER -U $DB_USER -P $DB_PASSWORD -Q "CREATE DATABASE AutoTest;"
+
+      - name: Create Table and Stored Procedure
+        run: |
+          sqlcmd -S $DB_SERVER -U $DB_USER -P $DB_PASSWORD -d AutoTest -Q "
+          CREATE TABLE [user] (
+              Name NVARCHAR(100),
+              Surname NVARCHAR(100),
+              Email NVARCHAR(255)
+          );"
+
+          sqlcmd -S $DB_SERVER -U $DB_USER -P $DB_PASSWORD -d AutoTest -Q "
+          CREATE PROCEDURE InsertUser
+              @Name NVARCHAR(100),
+              @Surname NVARCHAR(100),
+              @Email NVARCHAR(255)
+          AS
+          BEGIN
+              INSERT INTO [user] (Name, Surname, Email)
+              VALUES (@Name, @Surname, @Email);
+          END;"
+
+      - name: Insert Test Data
+        run: |
+          sqlcmd -S $DB_SERVER -U $DB_USER -P $DB_PASSWORD -d AutoTest -Q "
+          EXEC InsertUser 'John', 'Doe', 'john.doe@example.com';"
