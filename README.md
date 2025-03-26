@@ -1,1 +1,0 @@
-# sc_SiyakhanyaMjikeliso_2025
