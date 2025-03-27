@@ -1,12 +1,12 @@
 -- 1. Create database if it doesn't exist
-IF NOT EXISTS (SELECT name FROM sys.databases WHERE name = N'AutoTest_SM_27March')
+IF NOT EXISTS (SELECT name FROM sys.databases WHERE name = N'AutoDBSiyakhanyaMjikeliso')
 BEGIN
-    CREATE DATABASE AutoTest_SM_27March;
+    CREATE DATABASE AutoDBSiyakhanyaMjikeliso;
 END
 GO
 
 -- 2. Switch to the new database
-USE AutoTest_SM_27March;
+USE AutoDBSiyakhanyaMjikeliso;
 GO
 
 -- 3. Drop stored procedure if it exists
