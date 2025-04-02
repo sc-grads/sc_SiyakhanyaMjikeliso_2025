@@ -1,0 +1,48 @@
+name: SQL Deployment Template
+
+on:
+  workflow_call:
+    inputs:
+      sql_server:
+        required: true
+        type: string
+      sql_user:
+        required: true
+        type: string
+      sql_pass:
+        required: true
+        type: string
+      sql_file:
+        required: true
+        type: string
+
+jobs:
+  run-sql:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install sqlcmd on Ubuntu
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y curl gnupg
+          curl https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
+          curl https://packages.microsoft.com/config/ubuntu/20.04/prod.list | sudo tee /etc/apt/sources.list.d/msprod.list
+          sudo apt-get update
+          sudo ACCEPT_EULA=Y apt-get install -y mssql-tools unixodbc-dev
+          echo "/opt/mssql-tools/bin" >> $GITHUB_PATH
+
+      - name: Execute SQL with error handling
+        run: |
+          echo "📂 Running SQL script: ${{ inputs.sql_file }}"
+          set +e
+          sqlcmd -S "${{ inputs.sql_server }}" -U "${{ inputs.sql_user }}" -P "${{ inputs.sql_pass }}" -i "${{ inputs.sql_file }}"
+          status=$?
+          if [ $status -ne 0 ]; then
+            echo "❌ SQL execution failed with exit code $status"
+            exit $status
+          else
+            echo "✅ SQL executed successfully"
+          fi
