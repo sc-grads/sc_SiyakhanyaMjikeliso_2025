@@ -1,0 +1,55 @@
+name: CI/CD SQL Deployment with Manual Approval
+
+on:
+  push:
+    branches: [ main ]
+    paths: [ 'Database/**' ]
+
+jobs:
+  development:
+    name: Deploy to Development (Local)
+    uses: ./.github/workflows/sql-template.yml
+    with:
+      sql_server: ${{ secrets.SQL_SERVER }}
+      sql_user: ${{ secrets.SQL_USER }}
+      sql_pass: ${{ secrets.SQL_PASS }}
+      sql_file: Database/setup1.sql
+
+  production:
+    name: Deploy to Production (with approval)
+    needs: development
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+      url: 'https://rnimg-102-66-182-14.a.free.pinggy.link:44225'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install sqlcmd on Ubuntu
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y curl gnupg
+          curl https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
+          curl https://packages.microsoft.com/config/ubuntu/20.04/prod.list | sudo tee /etc/apt/sources.list.d/msprod.list
+          sudo apt-get update
+          sudo ACCEPT_EULA=Y apt-get install -y mssql-tools unixodbc-dev
+          echo "/opt/mssql-tools/bin" >> $GITHUB_PATH
+
+      - name: Run SQL script on production
+        env:
+          SQL_SERVER: ${{ secrets.PROD_SQL_SERVER }}
+          SQL_USER: ${{ secrets.PROD_SQL_USER }}
+          SQL_PASS: ${{ secrets.PROD_SQL_PASS }}
+        run: |
+          echo "🚀 Deploying to production..."
+          set +e
+          sqlcmd -S "$SQL_SERVER" -U "$SQL_USER" -P "$SQL_PASS" -i Database/setup1.sql
+          status=$?
+          if [ $status -ne 0 ]; then
+            echo "❌ Production deployment failed with code $status"
+            exit $status
+          else
+            echo "✅ Production deployment successful"
+          fi
