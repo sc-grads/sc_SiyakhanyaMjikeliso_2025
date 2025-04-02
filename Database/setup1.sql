@@ -1,4 +1,4 @@
--- 1. Create database if it doesn't exis
+-- 1. Create database if it doesn't exist
 BEGIN TRY
     IF NOT EXISTS (SELECT name FROM sys.databases WHERE name = N'AutoDBSiyakhanyaMjikeliso')
     BEGIN
