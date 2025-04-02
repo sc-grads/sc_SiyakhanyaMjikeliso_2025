@@ -1,5 +1,4 @@
-# .github/workflows/main-cicd.yml
-name: CI/CD SQL Deployment with Manual Approval
+name: CI/CD SQL Deployment (Calling Template)
 
 on:
   push:
@@ -8,27 +7,22 @@ on:
 
 jobs:
   development:
-    name: Deploy to Development (Local)
+    name: Deploy to Development (via Template)
     uses: ./.github/workflows/sql-template.yml
     with:
+      sql_file: Database/setup1.sql
+    secrets:
       sql_server: ${{ secrets.SQL_SERVER }}
       sql_user: ${{ secrets.SQL_USER }}
       sql_pass: ${{ secrets.SQL_PASS }}
-      sql_file: Database/setup1.sql
 
   production:
-    name: Deploy to Production (with approval)
+    name: Deploy to Production (via Template)
     needs: development
-    runs-on: ubuntu-latest
-    environment:
-      name: production
-      url: 'https://rnimg-102-66-182-14.a.free.pinggy.link:44225'
-
-    steps:
-      - name: Call SQL deployment template
-        uses: ./.github/workflows/sql-template.yml
-        with:
-          sql_server: ${{ secrets.PROD_SQL_SERVER }}
-          sql_user: ${{ secrets.PROD_SQL_USER }}
-          sql_pass: ${{ secrets.PROD_SQL_PASS }}
-          sql_file: Database/setup1.sql
+    uses: ./.github/workflows/sql-template.yml
+    with:
+      sql_file: Database/setup1.sql
+    secrets:
+      sql_server: ${{ secrets.PROD_SQL_SERVER }}
+      sql_user: ${{ secrets.PROD_SQL_USER }}
+      sql_pass: ${{ secrets.PROD_SQL_PASS }}
