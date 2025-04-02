@@ -92,3 +92,23 @@ sort #file Sort text in file.
 sort -k F #Sort by key. F is the field number.
 sort -r #Sort in reverse order.
 sort -u #Sort unique.
+
+#Removing Files
+
+rm #file Remove file. 
+
+rm -r #dir Remove the directory and its contents recursively. 
+
+rm -f #file Force removal and never prompt for confirmation.
+
+#Creating Aliases
+alias [name[=value]] #List or create aliases. Use name=value to create a new alias.
+
+#Removing Aliases
+unalias name #Remove the “name” alias.
+unalias -a #Remove all aliases
+
+#The su Command
+su [username] #Change user ID or become superuser
+whoami #Displays the effective username.
+sudo #Execute a command as another user, typically the superuser.
