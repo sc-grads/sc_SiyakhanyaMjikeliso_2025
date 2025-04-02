@@ -1,4 +1,5 @@
-name: SQL Deployment Template
+# .github/workflows/sql-template.yml
+name: Reusable SQL Deployment Template
 
 on:
   workflow_call:
@@ -17,9 +18,8 @@ on:
         type: string
 
 jobs:
-  run-sql:
+  deploy:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -34,14 +34,14 @@ jobs:
           sudo ACCEPT_EULA=Y apt-get install -y mssql-tools unixodbc-dev
           echo "/opt/mssql-tools/bin" >> $GITHUB_PATH
 
-      - name: Execute SQL with error handling
+      - name: Run SQL script with error handling
         run: |
-          echo "📂 Running SQL script: ${{ inputs.sql_file }}"
+          echo "🚀 Running SQL: ${{ inputs.sql_file }}"
           set +e
           sqlcmd -S "${{ inputs.sql_server }}" -U "${{ inputs.sql_user }}" -P "${{ inputs.sql_pass }}" -i "${{ inputs.sql_file }}"
           status=$?
           if [ $status -ne 0 ]; then
-            echo "❌ SQL execution failed with exit code $status"
+            echo "❌ SQL script failed with exit code $status"
             exit $status
           else
             echo "✅ SQL executed successfully"
