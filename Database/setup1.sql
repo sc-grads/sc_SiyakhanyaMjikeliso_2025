@@ -3,13 +3,13 @@ BEGIN TRY
     IF NOT EXISTS (SELECT name FROM sys.databases WHERE name = N'AutoDBSiya1')
     BEGIN
         CREATE DATABASE AutoDBSiya1;
-        PRINT '✅ Database created successfully.';
+        PRINT 'Database created successfully.';
     END
     ELSE
-        PRINT 'ℹ️ Database already exists.';
+        PRINT 'Database already exists.';
 END TRY
 BEGIN CATCH
-    PRINT '❌ Error creating database:';
+    PRINT 'Error creating database:';
     PRINT ERROR_MESSAGE();
 END CATCH
 GO
@@ -23,11 +23,11 @@ BEGIN TRY
     IF OBJECT_ID('CreateUserTable', 'P') IS NOT NULL
     BEGIN
         DROP PROCEDURE CreateUserTable;
-        PRINT 'ℹ️ Existing procedure dropped.';
+        PRINT 'Existing procedure dropped.';
     END
 END TRY
 BEGIN CATCH
-    PRINT '❌ Error dropping procedure:';
+    PRINT 'Error dropping procedure:';
     PRINT ERROR_MESSAGE();
 END CATCH
 GO
@@ -55,18 +55,18 @@ BEGIN TRY
                 (''Jane'', ''Smith'', ''jane@example.com'');
             END
             ELSE
-                PRINT ''ℹ️ Table already exists.'';
+                PRINT ''Table already exists.'';
         END TRY
         BEGIN CATCH
-            PRINT ''❌ Error inside procedure CreateUserTable:'';
+            PRINT ''Error inside procedure CreateUserTable:'';
             PRINT ERROR_MESSAGE();
         END CATCH
     END
     ');
-    PRINT '✅ Procedure created.';
+    PRINT 'Procedure created.';
 END TRY
 BEGIN CATCH
-    PRINT '❌ Error creating procedure:';
+    PRINT 'Error creating procedure:';
     PRINT ERROR_MESSAGE();
 END CATCH
 GO
@@ -74,10 +74,10 @@ GO
 -- 5. Execute the stored procedure
 BEGIN TRY
     EXEC CreateUserTable;
-    PRINT '✅ Procedure executed.';
+    PRINT 'Procedure executed.';
 END TRY
 BEGIN CATCH
-    PRINT '❌ Error executing procedure:';
+    PRINT 'Error executing procedure:';
     PRINT ERROR_MESSAGE();
 END CATCH
 GO
