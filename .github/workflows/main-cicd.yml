@@ -22,7 +22,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: production
-      url: ''
+      url: 'rnkmq-102-66-182-198.a.free.pinggy.link,38609'
     steps:
       - name: Awaiting approval to deploy to production
         run: echo "Approved! Proceeding to production deployment."
