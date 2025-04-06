@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<SharedDataSet xmlns="http://schemas.microsoft.com/sqlserver/reporting/2010/01/shareddatasetdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
+  <DataSet Name="DataSet1">
+    <Query>
+      <DataSourceReference>AdventureWorkDataSource</DataSourceReference>
+      <CommandText>SELECT Production.ProductSubcategory.ProductSubcategoryID, ProductSubcategory_1.ProductSubcategoryID AS Expr1, Production.ProductSubcategory.Name AS [Category Name], ProductSubcategory_1.Name AS [subcatagory Name]
+FROM     Production.ProductSubcategory INNER JOIN
+                  Production.ProductSubcategory AS ProductSubcategory_1 ON Production.ProductSubcategory.ProductSubcategoryID = ProductSubcategory_1.ProductSubcategoryID</CommandText>
+    </Query>
+    <Fields>
+      <Field Name="ProductSubcategoryID">
+        <DataField>ProductSubcategoryID</DataField>
+        <rd:TypeName>System.Int32</rd:TypeName>
+      </Field>
+      <Field Name="Expr1">
+        <DataField>Expr1</DataField>
+        <rd:TypeName>System.Int32</rd:TypeName>
+      </Field>
+      <Field Name="Category_Name">
+        <DataField>Category Name</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="subcatagory_Name">
+        <DataField>subcatagory Name</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+    </Fields>
+  </DataSet>
+</SharedDataSet>
