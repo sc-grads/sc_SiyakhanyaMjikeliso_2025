@@ -1,0 +1,130 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="5/29/2025 2:38:49 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="SAMBE2025017"
+  DTS:CreatorName="SAMBE2025017\Siyakhanya Mjikeliso"
+  DTS:DTSID="{F06F7E8B-70E7-493C-8704-5E53FDAA72A3}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="16.0.5685.0"
+  DTS:LocaleID="7177"
+  DTS:ObjectName="Package1"
+  DTS:PackageType="5"
+  DTS:VersionBuild="3"
+  DTS:VersionGUID="{2658A6AB-3744-44B0-B0C7-B2D408810363}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[WMI Connection Manager]"
+      DTS:CreationName="WMI"
+      DTS:DTSID="{6EB4704A-1097-4E59-889A-FB38B23D5BA6}"
+      DTS:ObjectName="WMI Connection Manager">
+      <DTS:ObjectData>
+        <WmiConnectionManager
+          ConnectionString="ServerName=\\localhost;Namespace=\root\cimv2;UseNtAuth=True;UserName=;"
+          ConnectByProxy="False" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{3607C80F-C45C-4481-AE57-4FD89786231B}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="varFileSize">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{23454183-A852-4F9B-A1F7-7DD1C59736A2}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="varFreeSpace">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Copy Database"
+      DTS:CreationName="Microsoft.FileSystemTask"
+      DTS:Description="File System Task"
+      DTS:DTSID="{96F4F230-93D8-4400-A28F-337ED5A38C5F}"
+      DTS:ExecutableType="Microsoft.FileSystemTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Copy Database"
+      DTS:TaskContact="File System Task;Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData />
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Get DB File Size"
+      DTS:CreationName="Microsoft.WmiDataReaderTask"
+      DTS:Description="WMI Data Reader Task"
+      DTS:DTSID="{89976D09-B8E0-4AEE-8103-608363154A89}"
+      DTS:ExecutableType="Microsoft.WmiDataReaderTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Get DB File Size"
+      DTS:TaskContact="WMI Data Reader Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="2">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <WMIDRTaskData
+          WQLQuerySource="select filesize from cim_datafile where name = ?"
+          DestinationType="Variable"
+          Destination="User::varFileSize"
+          OverwriteDestination="OverwriteDestination"
+          OutputType="PropertyNameAndValue"
+          WMIConnectionName="{6EB4704A-1097-4E59-889A-FB38B23D5BA6}" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Get G Drive Size"
+      DTS:CreationName="Microsoft.WmiDataReaderTask"
+      DTS:Description="WMI Data Reader Task"
+      DTS:DTSID="{09966BDF-E694-4627-8443-F1E04EF468CB}"
+      DTS:ExecutableType="Microsoft.WmiDataReaderTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Get G Drive Size"
+      DTS:TaskContact="WMI Data Reader Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="1">
+      <DTS:Variables />
+      <DTS:ObjectData />
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="155.2,41.6"
+          Id="Package\Get DB File Size"
+          TopLeft="353.333314028052,35.533333086239" />
+        <NodeLayout
+          Size="156,41.6"
+          Id="Package\Get G Drive Size"
+          TopLeft="361.666646906072,129.133332435356" />
+        <NodeLayout
+          Size="149.6,41.6"
+          Id="Package\Copy Database"
+          TopLeft="368.333313208488,233.999998372793" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
