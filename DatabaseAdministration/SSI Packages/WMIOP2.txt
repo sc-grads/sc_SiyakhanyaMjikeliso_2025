@@ -1,0 +1,5 @@
+Description, Local Fixed Disk
+DeviceID, C:
+FreeSpace, 329996517376
+Size, 510960594944
+SystemName, SAMBE2025017
