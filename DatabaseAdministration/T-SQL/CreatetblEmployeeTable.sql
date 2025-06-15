@@ -1,7 +1,1 @@
-SELECT TOP (1000) [EmployeeNumber]
-      ,[EmployeeFirstName]
-      ,[EmployeeMiddleName]
-      ,[EmployeeLastName]
-      ,[EmployeeGovernmentID]
-      ,[DateOFBirth]
-  FROM [70-461].[dbo].[tblEmployee]
+

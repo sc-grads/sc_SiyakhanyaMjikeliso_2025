@@ -21,3 +21,9 @@ Select EXP(1) as e
 
 DECLARE @myvar as numeric(7,2) =-456
 select ABS(@myvar) as myABS, SIGN(@myvar) as mySign
+
+
+go 
+Select Rand(555)
+
+

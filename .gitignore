@@ -1,0 +1,8 @@
+# Ignore Visual Studio cache
+**/.vs/
+
+# Ignore SSIS build outputs
+**/bin/
+**/obj/
+
+# (Any other patterns you don’t want tracked)

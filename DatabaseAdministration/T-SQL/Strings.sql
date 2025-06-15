@@ -4,9 +4,15 @@
 --nvarchar -Unicode - 2 byte
 
 
+
+Declare @chrMyCharacters as nvarchar(20)
+
+set @chrMyCharacters = N'hello?'
+
 Declare @chrMyCharacters as nvarchar(10)
 
 set @chrMyCharacters = 'hello'
+
 
 select @chrMyCharacters as myString, len(@chrMyCharacters) as Mylength, DATALENGTH(@chrMyCharacters) AS MYDataLength
  

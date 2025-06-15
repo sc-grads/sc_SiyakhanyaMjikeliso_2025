@@ -1,0 +1,913 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="6/4/2025 10:12:37 AM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="SAMBE2025017"
+  DTS:CreatorName="SAMBE2025017\Siyakhanya Mjikeliso"
+  DTS:DTSID="{5D3ACFD8-097C-4DD5-B7BD-8AC80AB372E3}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="16.0.5685.0"
+  DTS:LocaleID="7177"
+  DTS:ObjectName="Package3"
+  DTS:PackageType="5"
+  DTS:VersionBuild="28"
+  DTS:VersionGUID="{E07A3829-3CCE-44D6-B3CE-2336D2251DCC}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Excel Connection Manager]"
+      DTS:CreationName="EXCEL"
+      DTS:DTSID="{3F5E4DAC-354F-4FF7-A76D-37C199B0925B}"
+      DTS:ObjectName="Excel Connection Manager">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="0"
+          DTS:ConnectRetryInterval="0"
+          DTS:ConnectionString="Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Users\Siyakhanya Mjikeliso\OneDrive - Northern Data (Pty) Ltd\Documents\Timesheet\Pascal\Pascal Govender May Final.xlsx;Extended Properties=&quot;EXCEL 12.0 XML;HDR=YES&quot;;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Excel Connection Manager 1]"
+      DTS:CreationName="EXCEL"
+      DTS:DTSID="{2B3DD920-09EE-4085-888B-513569436847}"
+      DTS:ObjectName="Excel Connection Manager 1">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="0"
+          DTS:ConnectRetryInterval="0"
+          DTS:ConnectionString="Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Users\Siyakhanya Mjikeliso\OneDrive - Northern Data (Pty) Ltd\Documents\Timesheet\Pascal\Pascal Govender May Final.xlsx;Extended Properties=&quot;Excel 12.0 XML;HDR=YES&quot;;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Excel Connection Manager 2]"
+      DTS:CreationName="EXCEL"
+      DTS:DTSID="{8C640B88-4867-4740-9230-B1743C8C029A}"
+      DTS:ObjectName="Excel Connection Manager 2">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="0"
+          DTS:ConnectRetryInterval="0"
+          DTS:ConnectionString="Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Users\Siyakhanya Mjikeliso\OneDrive - Northern Data (Pty) Ltd\Documents\Timesheet\Pascal\Pascal Govender May Final.xlsx;Extended Properties=&quot;Excel 12.0 XML;HDR=YES&quot;;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[SAMBE2025017.TimesheetDB]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{BDB4EF77-660C-42F8-94FC-EAE10709E382}"
+      DTS:ObjectName="SAMBE2025017.TimesheetDB">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=SAMBE2025017;Initial Catalog=TimesheetDB;Provider=SQLOLEDB.1;Integrated Security=SSPI;Application Name=SSIS-Package3-{BDB4EF77-660C-42F8-94FC-EAE10709E382}SAMBE2025017.TimesheetDB;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Load Cleint"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:DelayValidation="True"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{9ED766DF-9F43-49EB-B088-5A56FE43E457}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Load Cleint"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Load Cleint\Conditional Split"
+              componentClassID="Microsoft.ConditionalSplit"
+              contactInfo="Conditional Split;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Routes data rows to different outputs depending on the content of the data. Use conditions (SSIS expressions) to specify which rows are routed. For example, separate records that need to be cleaned from those that are ready to be loaded or route only a subset of records."
+              name="Conditional Split"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Load Cleint\Conditional Split.Inputs[Conditional Split Input]"
+                  description="Input to the Conditional Split Transformation"
+                  name="Conditional Split Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Load Cleint\Conditional Split.Inputs[Conditional Split Input].Columns[Copy of Internal Sambe]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="Copy of Internal Sambe"
+                      lineageId="Package\Load Cleint\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of Internal Sambe]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load Cleint\Conditional Split.Outputs[Case 1]"
+                  description="Output 1 of the Conditional Split Transformation"
+                  errorOrTruncationOperation="Computation"
+                  errorRowDisposition="FailComponent"
+                  exclusionGroup="1"
+                  name="Case 1"
+                  synchronousInputId="Package\Load Cleint\Conditional Split.Inputs[Conditional Split Input]"
+                  truncationRowDisposition="FailComponent">
+                  <properties>
+                    <property
+                      containsID="true"
+                      dataType="System.String"
+                      description="Specifies the expression. This expression version uses lineage identifiers instead of column names."
+                      name="Expression">![ISNULL](#{Package\Load Cleint\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of Internal Sambe]}) &amp;&amp; [LEN]([TRIM](#{Package\Load Cleint\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of Internal Sambe]})) &gt; 0</property>
+                    <property
+                      containsID="true"
+                      dataType="System.String"
+                      description="Specifies the friendly version of the expression. This expression version uses column names."
+                      expressionType="Notify"
+                      name="FriendlyExpression">!ISNULL([Copy of Internal Sambe]) &amp;&amp; LEN(TRIM([Copy of Internal Sambe])) &gt; 0</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the position of the condition in the list of conditions that the transformation evaluates. The evaluation order is from the lowest to the highest value."
+                      name="EvaluationOrder">0</property>
+                  </properties>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Load Cleint\Conditional Split.Outputs[Conditional Split Default Output]"
+                  description="Default Output of the Conditional Split Transformation"
+                  exclusionGroup="1"
+                  name="Conditional Split Default Output"
+                  synchronousInputId="Package\Load Cleint\Conditional Split.Inputs[Conditional Split Input]">
+                  <properties>
+                    <property
+                      dataType="System.Boolean"
+                      name="IsDefaultOut">true</property>
+                  </properties>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Load Cleint\Conditional Split.Outputs[Conditional Split Error Output]"
+                  description="Error Output of the Conditional Split Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Conditional Split Error Output"
+                  synchronousInputId="Package\Load Cleint\Conditional Split.Inputs[Conditional Split Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Cleint\Conditional Split.Outputs[Conditional Split Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load Cleint\Conditional Split.Outputs[Conditional Split Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load Cleint\Conditional Split.Outputs[Conditional Split Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load Cleint\Conditional Split.Outputs[Conditional Split Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load Cleint\Data Conversion"
+              componentClassID="Microsoft.DataConvert"
+              contactInfo="Data Conversion;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Data Conversion"
+              name="Data Conversion"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Load Cleint\Data Conversion.Inputs[Data Conversion Input]"
+                  name="Data Conversion Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Load Cleint\Data Conversion.Inputs[Data Conversion Input].Columns[Internal Sambe]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Internal Sambe"
+                      cachedSortKeyPosition="1"
+                      lineageId="Package\Load Cleint\Distinct Client.Outputs[Sort Output].Columns[Internal Sambe]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load Cleint\Data Conversion.Outputs[Data Conversion Output]"
+                  exclusionGroup="1"
+                  name="Data Conversion Output"
+                  synchronousInputId="Package\Load Cleint\Data Conversion.Inputs[Data Conversion Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Cleint\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of Internal Sambe]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="50"
+                      lineageId="Package\Load Cleint\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of Internal Sambe]"
+                      name="Copy of Internal Sambe"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Load Cleint\Distinct Client.Outputs[Sort Output].Columns[Internal Sambe]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Load Cleint\Data Conversion.Outputs[Data Conversion Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Data Conversion Error Output"
+                  synchronousInputId="Package\Load Cleint\Data Conversion.Inputs[Data Conversion Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Cleint\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load Cleint\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load Cleint\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load Cleint\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load Cleint\Distinct Client"
+              componentClassID="Microsoft.Sort"
+              contactInfo="Sort;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Sorts input data in ascending or descending order when it cannot be sorted at its source. For example, sort sales data by 'customer id' before it is written to a flat file and delivered to another department. Note: We do not recommend this transformation for large data flows."
+              name="Distinct Client"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the Sort transformation removes rows with duplicate sort values."
+                  name="EliminateDuplicates">true</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the maximum number of threads to use for sorting."
+                  expressionType="Notify"
+                  name="MaximumThreads">-1</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\Load Cleint\Distinct Client.Inputs[Sort Input]"
+                  name="Sort Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Load Cleint\Distinct Client.Inputs[Sort Input].Columns[Internal Sambe]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Internal Sambe"
+                      lineageId="Package\Load Cleint\ExcelSrc_Client.Outputs[Excel Source Output].Columns[Internal Sambe]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">1</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load Cleint\Distinct Client.Outputs[Sort Output]"
+                  isSorted="true"
+                  name="Sort Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Cleint\Distinct Client.Outputs[Sort Output].Columns[Internal Sambe]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Load Cleint\Distinct Client.Outputs[Sort Output].Columns[Internal Sambe]"
+                      name="Internal Sambe"
+                      sortKeyPosition="1">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\Load Cleint\ExcelSrc_Client.Outputs[Excel Source Output].Columns[Internal Sambe]}</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load Cleint\ExcelSrc_Client"
+              componentClassID="Microsoft.ExcelSource"
+              contactInfo="Excel Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Excel Source"
+              name="ExcelSrc_Client"
+              usesDispositions="true"
+              validateExternalMetadata="False"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">Key$</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT 
+  [Date], 
+  [D of Week]         AS DayOfWeek,
+  [Client]            AS ClientName,
+  [Client Project Name] AS ProjectName,
+  [Description],
+  [Billable or Non Billable] AS BillableFlag,
+  [Comments],
+  [Total Hours]       AS HoursDecimal,
+  [Start Time]        AS StartTime,
+  [End Time]          AS EndTime
+FROM [May$A8:J]</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mapping from parameters in the SQL command to variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load Cleint\ExcelSrc_Client.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Excel Connection Manager 2]"
+                  connectionManagerRefId="Package.ConnectionManagers[Excel Connection Manager 2]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Load Cleint\ExcelSrc_Client.Outputs[Excel Source Output]"
+                  name="Excel Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Cleint\ExcelSrc_Client.Outputs[Excel Source Output].Columns[Internal Sambe]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Cleint\ExcelSrc_Client.Outputs[Excel Source Output].ExternalColumns[Internal Sambe]"
+                      length="255"
+                      lineageId="Package\Load Cleint\ExcelSrc_Client.Outputs[Excel Source Output].Columns[Internal Sambe]"
+                      name="Internal Sambe"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load Cleint\ExcelSrc_Client.Outputs[Excel Source Output].ExternalColumns[Description]"
+                      dataType="wstr"
+                      length="255"
+                      name="Description" />
+                    <externalMetadataColumn
+                      refId="Package\Load Cleint\ExcelSrc_Client.Outputs[Excel Source Output].ExternalColumns[Internal Sambe]"
+                      dataType="wstr"
+                      length="255"
+                      name="Internal Sambe" />
+                    <externalMetadataColumn
+                      refId="Package\Load Cleint\ExcelSrc_Client.Outputs[Excel Source Output].ExternalColumns[F2]"
+                      dataType="wstr"
+                      length="255"
+                      name="F2" />
+                    <externalMetadataColumn
+                      refId="Package\Load Cleint\ExcelSrc_Client.Outputs[Excel Source Output].ExternalColumns[Work]"
+                      dataType="wstr"
+                      length="255"
+                      name="Work" />
+                    <externalMetadataColumn
+                      refId="Package\Load Cleint\ExcelSrc_Client.Outputs[Excel Source Output].ExternalColumns[F4]"
+                      dataType="wstr"
+                      length="255"
+                      name="F4" />
+                    <externalMetadataColumn
+                      refId="Package\Load Cleint\ExcelSrc_Client.Outputs[Excel Source Output].ExternalColumns[F6]"
+                      dataType="wstr"
+                      length="255"
+                      name="F6" />
+                    <externalMetadataColumn
+                      refId="Package\Load Cleint\ExcelSrc_Client.Outputs[Excel Source Output].ExternalColumns[Resource]"
+                      dataType="wstr"
+                      length="255"
+                      name="Resource" />
+                    <externalMetadataColumn
+                      refId="Package\Load Cleint\ExcelSrc_Client.Outputs[Excel Source Output].ExternalColumns[F8]"
+                      dataType="wstr"
+                      length="255"
+                      name="F8" />
+                    <externalMetadataColumn
+                      refId="Package\Load Cleint\ExcelSrc_Client.Outputs[Excel Source Output].ExternalColumns[F9]"
+                      dataType="wstr"
+                      length="255"
+                      name="F9" />
+                    <externalMetadataColumn
+                      refId="Package\Load Cleint\ExcelSrc_Client.Outputs[Excel Source Output].ExternalColumns[Billable]"
+                      dataType="wstr"
+                      length="255"
+                      name="Billable" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Load Cleint\ExcelSrc_Client.Outputs[Excel Source Error Output]"
+                  isErrorOut="true"
+                  name="Excel Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Cleint\ExcelSrc_Client.Outputs[Excel Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load Cleint\ExcelSrc_Client.Outputs[Excel Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load Cleint\ExcelSrc_Client.Outputs[Excel Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load Cleint\ExcelSrc_Client.Outputs[Excel Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                    <outputColumn
+                      refId="Package\Load Cleint\ExcelSrc_Client.Outputs[Excel Source Error Output].Columns[Internal Sambe]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Load Cleint\ExcelSrc_Client.Outputs[Excel Source Error Output].Columns[Internal Sambe]"
+                      name="Internal Sambe" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load Cleint\OLE DB Destination"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="OLE DB Destination"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[Client]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load Cleint\OLE DB Destination.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[SAMBE2025017.TimesheetDB]"
+                  connectionManagerRefId="Package.ConnectionManagers[SAMBE2025017.TimesheetDB]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Load Cleint\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Load Cleint\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Copy of Internal Sambe]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="Copy of Internal Sambe"
+                      externalMetadataColumnId="Package\Load Cleint\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ClientName]"
+                      lineageId="Package\Load Cleint\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of Internal Sambe]" />
+                    <inputColumn
+                      refId="Package\Load Cleint\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Internal Sambe]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Internal Sambe"
+                      cachedSortKeyPosition="1"
+                      externalMetadataColumnId="Package\Load Cleint\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ClientID]"
+                      lineageId="Package\Load Cleint\Distinct Client.Outputs[Sort Output].Columns[Internal Sambe]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load Cleint\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ClientID]"
+                      dataType="i4"
+                      name="ClientID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Cleint\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ClientName]"
+                      codePage="1252"
+                      dataType="str"
+                      length="200"
+                      name="ClientName" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load Cleint\OLE DB Destination.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Load Cleint\OLE DB Destination.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Cleint\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load Cleint\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load Cleint\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load Cleint\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Load Cleint.Paths[Case 1]"
+              endId="Package\Load Cleint\OLE DB Destination.Inputs[OLE DB Destination Input]"
+              name="Case 1"
+              startId="Package\Load Cleint\Conditional Split.Outputs[Case 1]" />
+            <path
+              refId="Package\Load Cleint.Paths[Data Conversion Output]"
+              endId="Package\Load Cleint\Conditional Split.Inputs[Conditional Split Input]"
+              name="Data Conversion Output"
+              startId="Package\Load Cleint\Data Conversion.Outputs[Data Conversion Output]" />
+            <path
+              refId="Package\Load Cleint.Paths[Excel Source Output]"
+              endId="Package\Load Cleint\Distinct Client.Inputs[Sort Input]"
+              name="Excel Source Output"
+              startId="Package\Load Cleint\ExcelSrc_Client.Outputs[Excel Source Output]" />
+            <path
+              refId="Package\Load Cleint.Paths[Sort Output]"
+              endId="Package\Load Cleint\Data Conversion.Inputs[Data Conversion Input]"
+              name="Sort Output"
+              startId="Package\Load Cleint\Distinct Client.Outputs[Sort Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Truncate client"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{379C14B5-F06F-4CF3-B439-7D6FCAA0C1A7}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Truncate client"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{BDB4EF77-660C-42F8-94FC-EAE10709E382}"
+          SQLTask:SqlStatementSource="Delete from dbo.Client" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{B8FF0BA2-8E72-4DD8-8525-E43583A59C65}"
+      DTS:From="Package\Truncate client"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Load Cleint" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="131.2,41.6"
+          Id="Package\Load Cleint"
+          TopLeft="114.166660428875,136.933332381116" />
+        <NodeLayout
+          Size="146.4,41.6"
+          Id="Package\Truncate client"
+          TopLeft="140.83332563854,47.6666663351986" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="214.03332563854,89.2666663351986">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-34.2666652096643,47.6666660459174"
+              Start="0,0"
+              End="-34.2666652096643,40.1666660459174">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,19.8333330229587" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,19.8333330229587"
+                    Point2="0,23.8333330229587"
+                    Point3="-4,23.8333330229587" />
+                  <mssgle:LineSegment
+                    End="-30.2666652096643,23.8333330229587" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-30.2666652096643,23.8333330229587"
+                    Point2="-34.2666652096643,23.8333330229587"
+                    Point3="-34.2666652096643,27.8333330229587" />
+                  <mssgle:LineSegment
+                    End="-34.2666652096643,40.1666660459174" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Load Cleint">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="156,41.6"
+          Id="Package\Load Cleint\Data Conversion"
+          TopLeft="694.999962026875,215.599998734395" />
+        <NodeLayout
+          Size="152,41.6"
+          Id="Package\Load Cleint\ExcelSrc_Client"
+          TopLeft="112.499993853271,51.1333329777585" />
+        <NodeLayout
+          Size="153.6,41.6"
+          Id="Package\Load Cleint\Conditional Split"
+          TopLeft="653.333297636775,312.799998119672" />
+        <NodeLayout
+          Size="171.2,41.6"
+          Id="Package\Load Cleint\OLE DB Destination"
+          TopLeft="244.999986613791,302.466664563351" />
+        <NodeLayout
+          Size="142.4,41.6"
+          Id="Package\Load Cleint\Distinct Client"
+          TopLeft="194.166656057868,147.333332308796" />
+        <EdgeLayout
+          Id="Package\Load Cleint.Paths[Excel Source Output]"
+          TopLeft="188.499993853271,92.7333329777585">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="76.866662204597,54.5999993310375"
+              Start="0,0"
+              End="76.866662204597,47.0999993310375">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,23.2999996655188" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,23.2999996655188"
+                    Point2="0,27.2999996655188"
+                    Point3="4,27.2999996655188" />
+                  <mssgle:LineSegment
+                    End="72.866662204597,27.2999996655188" />
+                  <mssgle:CubicBezierSegment
+                    Point1="72.866662204597,27.2999996655188"
+                    Point2="76.866662204597,27.2999996655188"
+                    Point3="76.866662204597,31.2999996655188" />
+                  <mssgle:LineSegment
+                    End="76.866662204597,47.0999993310375" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Load Cleint.Paths[Data Conversion Output]"
+          TopLeft="772.999962026875,257.199998734395">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-42.8666643901,55.599999385277"
+              Start="0,0"
+              End="-42.8666643901,48.099999385277">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,23.7999996926385" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,23.7999996926385"
+                    Point2="0,27.7999996926385"
+                    Point3="-4,27.7999996926385" />
+                  <mssgle:LineSegment
+                    End="-38.8666643901,27.7999996926385" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-38.8666643901,27.7999996926385"
+                    Point2="-42.8666643901,27.7999996926385"
+                    Point3="-42.8666643901,31.7999996926385" />
+                  <mssgle:LineSegment
+                    End="-42.8666643901,48.099999385277" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Load Cleint.Paths[Case 1]"
+          TopLeft="653.333297636775,333.599998119672">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-237.133311022985,-10.333333556321"
+              Start="0,0"
+              End="-229.633311022985,-10.333333556321">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="-114.566655511492,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-114.566655511492,0"
+                    Point2="-118.566655511492,0"
+                    Point3="-118.566655511492,-4" />
+                  <mssgle:LineSegment
+                    End="-118.566655511492,-6.33333355632095" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-118.566655511492,-6.33333355632095"
+                    Point2="-118.566655511492,-10.333333556321"
+                    Point3="-122.566655511492,-10.333333556321" />
+                  <mssgle:LineSegment
+                    End="-229.633311022985,-10.333333556321" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-142.445874261492,1,47.7584375,16"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Load Cleint.Paths[Sort Output]"
+          TopLeft="265.366656057868,188.933332308796">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="507.633305969007,26.666666425599"
+              Start="0,0"
+              End="507.633305969007,19.166666425599">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,9.3333332127995" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,9.3333332127995"
+                    Point2="0,13.3333332127995"
+                    Point3="4,13.3333332127995" />
+                  <mssgle:LineSegment
+                    End="503.633305969007,13.3333332127995" />
+                  <mssgle:CubicBezierSegment
+                    Point1="503.633305969007,13.3333332127995"
+                    Point2="507.633305969007,13.3333332127995"
+                    Point3="507.633305969007,17.3333332127995" />
+                  <mssgle:LineSegment
+                    End="507.633305969007,19.166666425599" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Load Cleint\ExcelSrc_Client">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Load Cleint\OLE DB Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
