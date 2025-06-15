@@ -1,6 +1,8 @@
 --RIGHT JOIN
 
 
+
+
 Select *
 from(
 

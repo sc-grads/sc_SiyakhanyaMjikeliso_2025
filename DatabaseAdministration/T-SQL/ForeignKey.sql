@@ -6,8 +6,13 @@ ADD CONSTRAINT FK_tblTransaction_EmployeeNumber FOREIGN KEY (EmployeeNumber)
 REFERENCES tblEmployee(EmployeeNumber)
 ON UPDATE CASCADE
 ON DELETE set default
+
 UPDATE tblEmployee SET EmployeeNumber = 9123 Where EmployeeNumber = 123
 --DELETE tblEmployee Where EmployeeNumber = 123
+
+--UPDATE tblEmployee SET EmployeeNumber = 9123 Where EmployeeNumber = 123
+DELETE tblEmployee Where EmployeeNumber = 123
+
 
 SELECT E.EmployeeNumber, T.*
 FROM tblEmployee as E
