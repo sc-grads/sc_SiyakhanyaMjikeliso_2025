@@ -56,7 +56,7 @@ jobs:
         shell: powershell
         run: |
           Write-Host "Running SQL script..."
-          sqlcmd -S $env:SQL_SERVER -U $env:SQL_USERNAME -P $env:SQL_PASSWORD -i Database/create_timesheetdb.sql -o output.txt
+          sqlcmd -S $env:SQL_SERVER -U $env:SQL_USERNAME -P $env:SQL_PASSWORD -i HandsOnProject/Timesheet/create_timesheetdb.sql -o output.txt
           if ($LASTEXITCODE -ne 0) {
             Write-Error "SQL script execution failed"
             cat output.txt
