@@ -49,8 +49,8 @@ jobs:
           $deployArgs = @(
             "/Silent",
             "/SourcePath:`"$ispacPath`"",
-            "/DestinationServer:""SAMBE2025017""",
-            "/DestinationPath:""/SSISDB/MySSISPackages/Integration Services Project1"""
+            "/DestinationServer:`"$env:SQL_SERVER`"",
+            "/DestinationPath:`"/SSISDB/MySSISPackages/Integration Services Project1`""
           )
 
           $process = Start-Process `
@@ -79,9 +79,8 @@ jobs:
         run: |
           Write-Host "Creating SQL Agent Jobs to run every 2 minutes..."
 
-          # Calculate start date and time in PowerShell
-          $startDate = (Get-Date).ToString("yyyyMMdd") # e.g., 20250619
-          $startTime = (Get-Date).ToString("HHmmss")   # e.g., 225100 for 10:51 PM
+          $startDate = (Get-Date).ToString("yyyyMMdd")
+          $startTime = (Get-Date).ToString("HHmmss")
 
           $packages = @(
             "Stg_Months",
@@ -95,55 +94,58 @@ jobs:
           foreach ($pkg in $packages) {
             $jobName = "RunSSIS_${pkg}"
             $scheduleName = "Every2Min_${pkg}"
+            $ssisPath = "SSISDB\\MySSISPackages\\Integration Services Project1\\$pkg.dtsx"
+            $ssisCommand = "/ISSERVER \"\"$ssisPath\"\" /SERVER \"$env:SQL_SERVER\""
+            $escapedCommand = $ssisCommand -replace "'", "''"
 
-            $jobScript = "
-            USE msdb;
+            $jobScript = @"
+USE msdb;
 
-            IF EXISTS (SELECT * FROM msdb.dbo.sysjobs WHERE name = '$jobName')
-            BEGIN
-              EXEC msdb.dbo.sp_delete_job @job_name = '$jobName';
-            END;
+IF EXISTS (SELECT * FROM msdb.dbo.sysjobs WHERE name = '$jobName')
+BEGIN
+  EXEC msdb.dbo.sp_delete_job @job_name = '$jobName';
+END;
 
-            EXEC msdb.dbo.sp_add_job
-              @job_name = '$jobName',
-              @enabled = 1,
-              @owner_login_name = '$env:SQL_USERNAME';
+EXEC msdb.dbo.sp_add_job
+  @job_name = '$jobName',
+  @enabled = 1,
+  @owner_login_name = '$($env:SQL_USERNAME)';
 
-            EXEC msdb.dbo.sp_add_jobstep
-              @job_name = N'{jobName}',
-              @step_name = N'Run SSIS Package',
-              @subsystem = N'SSIS',
-              @command = N'/ISSERVER "\"SSISDB\MySSISPackages\Integration Services Project1\{jobName}\"" /SERVER "$env:SQL_SERVER"',
+EXEC msdb.dbo.sp_add_jobstep
+  @job_name = '$jobName',
+  @step_name = 'Run SSIS Package',
+  @subsystem = 'SSIS',
+  @command = '$escapedCommand',
+  @on_success_action = 1,
+  @database_name = 'SSISDB';
 
-              @on_success_action = 1,
-              @database_name = 'SSISDB';
+DECLARE @schedule_id INT;
+EXEC msdb.dbo.sp_add_schedule
+  @schedule_name = '$scheduleName',
+  @enabled = 1,
+  @freq_type = 4,
+  @freq_interval = 1,
+  @freq_subday_type = 4,
+  @freq_subday_interval = 2,
+  @active_start_date = $startDate,
+  @active_start_time = $startTime,
+  @schedule_id = @schedule_id OUTPUT;
 
-            DECLARE @schedule_id INT;
-            EXEC msdb.dbo.sp_add_schedule
-              @schedule_name = '$scheduleName',
-              @enabled = 1,
-              @freq_type = 4, -- Daily
-              @freq_interval = 1, -- Every day
-              @freq_subday_type = 4, -- Minutes
-              @freq_subday_interval = 2, -- Every 2 minutes
-              @active_start_date = $startDate,
-              @active_start_time = $startTime,
-              @schedule_id = @schedule_id OUTPUT;
+EXEC msdb.dbo.sp_attach_schedule
+  @job_name = '$jobName',
+  @schedule_name = '$scheduleName';
 
-            EXEC msdb.dbo.sp_attach_schedule
-              @job_name = '$jobName',
-              @schedule_name = '$scheduleName';
-
-            EXEC msdb.dbo.sp_add_jobserver
-              @job_name = '$jobName';
-            "
+EXEC msdb.dbo.sp_add_jobserver
+  @job_name = '$jobName';
+"@
 
             try {
               Invoke-Sqlcmd -ServerInstance $env:SQL_SERVER -Username $env:SQL_USERNAME -Password $env:SQL_PASSWORD -Query $jobScript -ErrorAction Stop
-              Write-Host "Created job $jobName to run every 2 minutes starting at $startTime on $startDate for package: ${pkg}"
+              Write-Host "✅ Created job $jobName for package $pkg"
             } catch {
-              Write-Error "Failed to create job for package ${pkg}: $($_.Exception.Message)"
+              Write-Error "❌ Failed to create job for package $pkg: $($_.Exception.Message)"
               exit 1
             }
           }
-          Write-Host "All SQL Agent jobs created with recurring 2-minute schedule."
+
+          Write-Host "✅ All SQL Agent jobs created with recurring 2-minute schedules."
