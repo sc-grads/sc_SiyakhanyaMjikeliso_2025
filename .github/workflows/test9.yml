@@ -99,53 +99,53 @@ jobs:
             $escapedCommand = $ssisCommand -replace "'", "''"
 
             $jobScript = @"
-USE msdb;
+            USE msdb;
 
-IF EXISTS (SELECT * FROM msdb.dbo.sysjobs WHERE name = '$jobName')
-BEGIN
-  EXEC msdb.dbo.sp_delete_job @job_name = '$jobName';
-END;
-
-EXEC msdb.dbo.sp_add_job
-  @job_name = '$jobName',
-  @enabled = 1,
-  @owner_login_name = '$($env:SQL_USERNAME)';
-
-EXEC msdb.dbo.sp_add_jobstep
-  @job_name = '$jobName',
-  @step_name = 'Run SSIS Package',
-  @subsystem = 'SSIS',
-  @command = '$escapedCommand',
-  @on_success_action = 1,
-  @database_name = 'SSISDB';
-
-DECLARE @schedule_id INT;
-EXEC msdb.dbo.sp_add_schedule
-  @schedule_name = '$scheduleName',
-  @enabled = 1,
-  @freq_type = 4,
-  @freq_interval = 1,
-  @freq_subday_type = 4,
-  @freq_subday_interval = 2,
-  @active_start_date = $startDate,
-  @active_start_time = $startTime,
-  @schedule_id = @schedule_id OUTPUT;
-
-EXEC msdb.dbo.sp_attach_schedule
-  @job_name = '$jobName',
-  @schedule_name = '$scheduleName';
-
-EXEC msdb.dbo.sp_add_jobserver
-  @job_name = '$jobName';
-"@
-
-            try {
-              Invoke-Sqlcmd -ServerInstance $env:SQL_SERVER -Username $env:SQL_USERNAME -Password $env:SQL_PASSWORD -Query $jobScript -ErrorAction Stop
-              Write-Host "✅ Created job $jobName for package $pkg"
-            } catch {
-              Write-Error "❌ Failed to create job for package $pkg: $($_.Exception.Message)"
-              exit 1
-            }
-          }
-
-          Write-Host "✅ All SQL Agent jobs created with recurring 2-minute schedules."
+              IF EXISTS (SELECT * FROM msdb.dbo.sysjobs WHERE name = '$jobName')
+              BEGIN
+                EXEC msdb.dbo.sp_delete_job @job_name = '$jobName';
+              END;
+              
+              EXEC msdb.dbo.sp_add_job
+                @job_name = '$jobName',
+                @enabled = 1,
+                @owner_login_name = '$($env:SQL_USERNAME)';
+              
+              EXEC msdb.dbo.sp_add_jobstep
+                @job_name = '$jobName',
+                @step_name = 'Run SSIS Package',
+                @subsystem = 'SSIS',
+                @command = '$escapedCommand',
+                @on_success_action = 1,
+                @database_name = 'SSISDB';
+              
+              DECLARE @schedule_id INT;
+              EXEC msdb.dbo.sp_add_schedule
+                @schedule_name = '$scheduleName',
+                @enabled = 1,
+                @freq_type = 4,
+                @freq_interval = 1,
+                @freq_subday_type = 4,
+                @freq_subday_interval = 2,
+                @active_start_date = $startDate,
+                @active_start_time = $startTime,
+                @schedule_id = @schedule_id OUTPUT;
+              
+              EXEC msdb.dbo.sp_attach_schedule
+                @job_name = '$jobName',
+                @schedule_name = '$scheduleName';
+              
+              EXEC msdb.dbo.sp_add_jobserver
+                @job_name = '$jobName';
+              "@
+              
+                          try {
+                            Invoke-Sqlcmd -ServerInstance $env:SQL_SERVER -Username $env:SQL_USERNAME -Password $env:SQL_PASSWORD -Query $jobScript -ErrorAction Stop
+                            Write-Host "✅ Created job $jobName for package $pkg"
+                          } catch {
+                            Write-Error "❌ Failed to create job for package $pkg: $($_.Exception.Message)"
+                            exit 1
+                          }
+                        }
+              
+                        Write-Host "✅ All SQL Agent jobs created with recurring 2-minute schedules."
