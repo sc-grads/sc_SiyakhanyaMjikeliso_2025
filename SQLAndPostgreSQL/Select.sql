@@ -1,0 +1,1 @@
+SELECT name, Area FROM cities WHERE Area NOT IN (3043,8223) OR name ='Delhi';
